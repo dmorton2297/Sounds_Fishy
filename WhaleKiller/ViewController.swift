@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     
     var cornerViews = [UIView]()
     
+    
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,6 @@ class ViewController: UIViewController {
         setupDynamicAnimator()
         setUpCornerViews()
         
-        let soundPlayer = ToneGenerator()
     }
     
     func spawnBlock(){
@@ -118,13 +118,19 @@ class ViewController: UIViewController {
         let xCoord = (coordinate.x) - (fingerBlockSideLength / 2)
         let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
-        
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
+        
+        blockIsContatinedInCornerView()
     }
     
     func blockIsContatinedInCornerView() -> Bool{
+        let blockCenterX = blockView.frame.origin.x + (blockSideLength / 2)
+        let blockCenterY = blockView.frame.origin.y + (blockSideLength / 2)
+        let blockCenterCoordinate = CGPoint(x: blockCenterX, y: blockCenterY)
         for x in cornerViews{
-            
+            if (x.frame.contains(blockCenterCoordinate)){
+                println("block is in a view")
+            }
         }
         return false
     }
