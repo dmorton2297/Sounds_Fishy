@@ -11,7 +11,8 @@ import AudioToolbox
 import AVFoundation
 
 class ViewController: UIViewController, UICollisionBehaviorDelegate {
-    
+
+    //MARK: Variables
     let blockSideLength = CGFloat(40)
     let fingerBlockSideLength = CGFloat(20)
     var blockView : UIView!
@@ -21,7 +22,9 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var timing = false
     var timingBeeps = false
     var backgroundView : UIView!
-    
+    var angleFloat : CGFloat!
+
+    //MARK: View did load
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         let speaker = Speaker()
@@ -31,20 +34,14 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         speaker.speakText("The game has started")
         //var a = SinePlayer()
-        
-        
     }
-    
-    
+
     func createGame(){
         self.view.accessibilityDecrement()
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
         setUpAlphaAndBlurView()
-        
-        
-        
     }
     
     func destroyGame(){
@@ -104,6 +101,11 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         dynamicAnimator.addBehavior(blockDynamicBehavior)
         dynamicAnimator.addBehavior(fingerDynamicBehavior)
         
+    }
+
+    func randomizeAngleForNewGame(){
+        let a = CGFloat(arc4random_uniform(UInt32(40)))
+        angleFloat = a/40
     }
     
     func setUpAlphaAndBlurView(){
