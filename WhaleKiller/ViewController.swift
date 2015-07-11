@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
+        //MARK: Game loop starts
         let speaker = Speaker()
         super.viewDidLoad()
         createGame()
@@ -34,7 +35,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         
     }
-    
     
     func createGame(){
         self.view.accessibilityDecrement()
@@ -223,7 +223,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let a = CGFloat(1.0)
         backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
         
-        let beepInterval = distance / 250
+        let beepInterval = distance / 400
         println(beepInterval)
         
         if (!timingBeeps){
@@ -243,7 +243,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     func beep(){
-        //AudioServicesPlaySystemSound(kSystemSoundID);
+        AudioServicesPlaySystemSound(1103);
         //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         timingBeeps = false
     }
