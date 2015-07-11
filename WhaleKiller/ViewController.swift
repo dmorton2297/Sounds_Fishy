@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AudioToolbox
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     let blockSideLength = CGFloat(40)
     let fingerBlockSideLength = CGFloat(20)
@@ -86,6 +87,7 @@ class ViewController: UIViewController {
         let collisionBehavior = UICollisionBehavior(items: [blockView, fingerView])
         collisionBehavior.collisionMode = UICollisionBehaviorMode.Everything
         collisionBehavior.translatesReferenceBoundsIntoBoundary = true
+        collisionBehavior.collisionDelegate = self
         
         dynamicAnimator.addBehavior(blockPushBehavior)
         dynamicAnimator.addBehavior(collisionBehavior)
@@ -211,6 +213,13 @@ class ViewController: UIViewController {
         backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
         
         println(distance)
+    }
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
+        if (item1.isEqual(fingerView) && item2.isEqual(blockView) || item1.isEqual(blockView) && item2.isEqual(fingerView)){
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            
+        }
     }
     
 }
