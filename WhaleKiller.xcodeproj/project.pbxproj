@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1412176C1B51CE6F00F0FE51 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CCE2EBB1B519D160013C923 /* AVFoundation.framework */; };
 		5C2951CE1B515BA000907250 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2951CD1B515BA000907250 /* AppDelegate.swift */; };
 		5C2951D01B515BA000907250 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2951CF1B515BA000907250 /* ViewController.swift */; };
 		5C2951D31B515BA000907250 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2951D11B515BA000907250 /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1412176C1B51CE6F00F0FE51 /* AVFoundation.framework in Frameworks */,
 				5CCE2EBE1B519D440013C923 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
