@@ -18,12 +18,17 @@ class ViewController: UIViewController {
     
     var dynamicAnimator : UIDynamicAnimator!
     
+    var cornerViews = [UIView]()
+    
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         super.viewDidLoad()
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
+        setUpCornerViews()
+        
+        let soundPlayer = ToneGenerator()
     }
     
     func spawnBlock(){
@@ -72,15 +77,39 @@ class ViewController: UIViewController {
     }
     
     func setUpCornerViews(){
+        
         let screenOrigin = self.view.frame.origin
+        
         let xOrigin = screenOrigin.x
         let yOrigin = screenOrigin.y
         let cornerSideLength = CGFloat(80)
+        let adjustedScreenWidth = self.view.frame.width - cornerSideLength
+        let adjustedScreenHeight = self.view.frame.height - cornerSideLength
         
-        let leftTopCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
-        let leftCornerView = UIView(frame: leftTopCornerRect)
+        let topLeftCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
+        let topLeftCornerView = UIView(frame: topLeftCornerRect)
+        cornerViews.append(topLeftCornerView)
+        topLeftCornerView.backgroundColor = UIColor.grayColor()
         
+        let topRightCornerRect = CGRectMake(xOrigin + adjustedScreenWidth , yOrigin, cornerSideLength, cornerSideLength)
+        let topRightCornerView = UIView(frame: topRightCornerRect)
+        cornerViews.append(topRightCornerView)
+        topRightCornerView.backgroundColor = UIColor.grayColor()
         
+        let bottomLeftCornerRect = CGRectMake(0, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
+        cornerViews.append(bottomLeftCornerView)
+        bottomLeftCornerView.backgroundColor = UIColor.grayColor()
+        
+        let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
+        cornerViews.append(bottomRightCornerView)
+        bottomRightCornerView.backgroundColor = UIColor.grayColor()
+        
+        self.view.insertSubview(topLeftCornerView, atIndex: 0)
+        self.view.insertSubview(topRightCornerView, atIndex: 0)
+        self.view.insertSubview(bottomLeftCornerView, atIndex: 0)
+        self.view.insertSubview(bottomRightCornerView, atIndex: 0)
     }
     
     @IBAction func userPanned(sender: AnyObject) {
@@ -92,5 +121,26 @@ class ViewController: UIViewController {
         
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
     }
+    
+    func blockIsContatinedInCornerView() -> Bool{
+        for x in cornerViews{
+            
+        }
+        return false
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
