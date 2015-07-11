@@ -260,7 +260,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         if (item1.isEqual(fingerView) && item2.isEqual(blockView) || item1.isEqual(blockView) && item2.isEqual(fingerView)){
             let speaker = Speaker()
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            speaker.speakText("Collision")
+            //speaker.speakText("Collision")
             
         }
     }
