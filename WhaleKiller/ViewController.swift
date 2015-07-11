@@ -22,9 +22,10 @@ class ViewController: UIViewController {
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         createGame()
+        var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "calculateAlphaFromDistanceBetweenBlocks", userInfo: nil, repeats: true)
     }
+
     
     func createGame(){
         spawnBlock()
@@ -33,15 +34,17 @@ class ViewController: UIViewController {
         
         let a = CGFloat(1.0)
         backgroundView = UIView(frame: self.view.frame)
-        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.5)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
         self.view.insertSubview(backgroundView, atIndex: 1)
         self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
         
         self.view.addSubview(blurView)
+        
         
         
         
@@ -51,6 +54,8 @@ class ViewController: UIViewController {
     func destroyGame(){
         blockView.removeFromSuperview()
         fingerView.removeFromSuperview()
+        backgroundView.removeFromSuperview()
+        backgroundView = nil
         dynamicAnimator = nil
         blockView = nil
         fingerView = nil
@@ -64,13 +69,13 @@ class ViewController: UIViewController {
         let yCenter = CGFloat((self.view.frame.height / 2))
         
         blockView = UIView(frame: CGRectMake(xCenter, yCenter, blockSideLength, blockSideLength))
-        blockView.backgroundColor = UIColor.redColor()
+        blockView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(blockView)
     }
     
     func spawnFingerBlock(){
         fingerView = UIView(frame: CGRectMake(10.0, 10.0, fingerBlockSideLength, fingerBlockSideLength))
-        fingerView.backgroundColor = UIColor.greenColor()
+        fingerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(fingerView)
     }
     
@@ -84,7 +89,7 @@ class ViewController: UIViewController {
         let blockDynamicBehavior = UIDynamicItemBehavior(items: [blockView])
         blockDynamicBehavior.elasticity = 1.0
         blockDynamicBehavior.resistance = 0.0
-        blockDynamicBehavior.friction = 0.0
+        blockDynamicBehavior.friction = 0.02
         
         let fingerDynamicBehavior = UIDynamicItemBehavior(items: [fingerView])
         fingerDynamicBehavior.allowsRotation = false
@@ -195,7 +200,7 @@ class ViewController: UIViewController {
         let distance = sqrt(square)
         
         
-        var percentAlpha = distance / 100.0
+        var percentAlpha = distance / 200.0
         percentAlpha = 1.0 - percentAlpha
         
         if (percentAlpha > 1.0){
@@ -207,5 +212,6 @@ class ViewController: UIViewController {
         
         println(distance)
     }
+    
 }
 
