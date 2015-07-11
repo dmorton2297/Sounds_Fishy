@@ -31,23 +31,8 @@ class ViewController: UIViewController {
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
-        
-        let a = CGFloat(1.0)
-        backgroundView = UIView(frame: self.view.frame)
-        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
-        self.view.insertSubview(backgroundView, atIndex: 1)
-        self.view.backgroundColor = UIColor.blackColor()
-        setUpCornerViews()
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.view.frame
-        
-        self.view.addSubview(blurView)
-        
-        
-        
-        
+        setUpAlphaAndBlurView()
+       
         
     }
     
@@ -69,13 +54,13 @@ class ViewController: UIViewController {
         let yCenter = CGFloat((self.view.frame.height / 2))
         
         blockView = UIView(frame: CGRectMake(xCenter, yCenter, blockSideLength, blockSideLength))
-        blockView.backgroundColor = UIColor.clearColor()
+        blockView.backgroundColor = UIColor.redColor()
         self.view.addSubview(blockView)
     }
     
     func spawnFingerBlock(){
         fingerView = UIView(frame: CGRectMake(10.0, 10.0, fingerBlockSideLength, fingerBlockSideLength))
-        fingerView.backgroundColor = UIColor.clearColor()
+        fingerView.backgroundColor = UIColor.greenColor()
         self.view.addSubview(fingerView)
     }
     
@@ -107,6 +92,21 @@ class ViewController: UIViewController {
         dynamicAnimator.addBehavior(blockDynamicBehavior)
         dynamicAnimator.addBehavior(fingerDynamicBehavior)
         
+    }
+    
+    func setUpAlphaAndBlurView(){
+        let a = CGFloat(1.0)
+        backgroundView = UIView(frame: self.view.frame)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
+        self.view.insertSubview(backgroundView, atIndex: 1)
+        self.view.backgroundColor = UIColor.blackColor()
+        setUpCornerViews()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
+        
+        self.view.addSubview(blurView)
     }
     
     func setUpCornerViews(){
