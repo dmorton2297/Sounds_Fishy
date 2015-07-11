@@ -17,16 +17,41 @@ class ViewController: UIViewController {
     var dynamicAnimator : UIDynamicAnimator!
     var cornerViews = [UIView]()
     var timing = false
-    
+    var backgroundView : UIView!
     
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createGame()
+    }
+    
+    func createGame(){
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
+        
+        let a = CGFloat(1.0)
+        backgroundView = UIView(frame: self.view.frame)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.5)
+        self.view.insertSubview(backgroundView, atIndex: 1)
+        self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
+        
+        
+
+    }
+    
+    func destroyGame(){
+        blockView.removeFromSuperview()
+        fingerView.removeFromSuperview()
+        dynamicAnimator = nil
+        blockView = nil
+        fingerView = nil
+        for x in cornerViews{
+            x.removeFromSuperview()
+        }
     }
     
     func spawnBlock(){
@@ -87,22 +112,22 @@ class ViewController: UIViewController {
         let topLeftCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
         let topLeftCornerView = UIView(frame: topLeftCornerRect)
         cornerViews.append(topLeftCornerView)
-        topLeftCornerView.backgroundColor = UIColor.grayColor()
+        topLeftCornerView.backgroundColor = UIColor.clearColor()
         
         let topRightCornerRect = CGRectMake(xOrigin + adjustedScreenWidth , yOrigin, cornerSideLength, cornerSideLength)
         let topRightCornerView = UIView(frame: topRightCornerRect)
         cornerViews.append(topRightCornerView)
-        topRightCornerView.backgroundColor = UIColor.grayColor()
+        topRightCornerView.backgroundColor = UIColor.clearColor()
         
         let bottomLeftCornerRect = CGRectMake(0, adjustedScreenHeight, cornerSideLength, cornerSideLength)
         let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
         cornerViews.append(bottomLeftCornerView)
-        bottomLeftCornerView.backgroundColor = UIColor.grayColor()
+        bottomLeftCornerView.backgroundColor = UIColor.clearColor()
         
         let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength, cornerSideLength)
         let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
         cornerViews.append(bottomRightCornerView)
-        bottomRightCornerView.backgroundColor = UIColor.grayColor()
+        bottomRightCornerView.backgroundColor = UIColor.clearColor()
         
         self.view.insertSubview(topLeftCornerView, atIndex: 0)
         self.view.insertSubview(topRightCornerView, atIndex: 0)
@@ -111,6 +136,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func userPanned(sender: AnyObject) {
+        if (fingerView == nil || blockView == nil){ return }
         let panGesture = sender as! UIPanGestureRecognizer
         let coordinate = panGesture.locationInView(self.view)
         let xCoord = (coordinate.x) - (fingerBlockSideLength / 2)
@@ -139,16 +165,22 @@ class ViewController: UIViewController {
     }
     
     func timerFinished(){
-        println("Timer finished")
         
         if (blockIsContatinedInCornerView()){
             let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil)
+            let okAction = UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default){(alert) -> Void in
+                self.destroyGame()
+                self.createGame()
+            }
             
             alert.addAction(okAction)
             self.presentViewController(alert, animated: true, completion: nil)
         }
         timing = false
+    }
+    
+    func calculateAlphaFromDistanceBetweenBlocks(){
+        
     }
 }
 
