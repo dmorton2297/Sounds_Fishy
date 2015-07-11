@@ -9,16 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     let blockSideLength = CGFloat(40)
     let fingerBlockSideLength = CGFloat(20)
-    
     var blockView : UIView!
     var fingerView : UIView!
-    
     var dynamicAnimator : UIDynamicAnimator!
-    
     var cornerViews = [UIView]()
+    var timing = false
     
     
     //setup UIDynamics and collision behaviors
@@ -120,7 +118,12 @@ class ViewController: UIViewController {
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
         
-        blockIsContatinedInCornerView()
+        if (blockIsContatinedInCornerView()){
+            if (!timing){
+                timing = true
+                var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
+            }
+        }
     }
     
     func blockIsContatinedInCornerView() -> Bool{
@@ -129,24 +132,23 @@ class ViewController: UIViewController {
         let blockCenterCoordinate = CGPoint(x: blockCenterX, y: blockCenterY)
         for x in cornerViews{
             if (x.frame.contains(blockCenterCoordinate)){
-                println("block is in a view")
+                return true
             }
         }
         return false
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    func timerFinished(){
+        println("Timer finished")
+        
+        if (blockIsContatinedInCornerView()){
+            let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default, handler: nil)
+            
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        timing = false
+    }
 }
 
