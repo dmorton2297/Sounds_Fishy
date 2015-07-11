@@ -7,9 +7,11 @@
 //
 
 import UIKit
+
+import AudioToolbox
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     let blockSideLength = CGFloat(40)
     let fingerBlockSideLength = CGFloat(20)
@@ -18,6 +20,7 @@ class ViewController: UIViewController {
     var dynamicAnimator : UIDynamicAnimator!
     var cornerViews = [UIView]()
     var timing = false
+    var timingBeeps = false
     var backgroundView : UIView!
     var audioEngine:AVAudioEngine!
     var audioFile:AVAudioFile!
@@ -27,29 +30,29 @@ class ViewController: UIViewController {
     
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
+        let speaker = Speaker()
         super.viewDidLoad()
 
         createGame()
+        var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
+        
+        speaker.speakText("The game has started")
+        //var a = SinePlayer()
+        
+        
     }
     
+    
     func createGame(){
+        self.view.accessibilityDecrement()
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
-        
-        let a = CGFloat(1.0)
-        backgroundView = UIView(frame: self.view.frame)
-        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.5)
-        self.view.insertSubview(backgroundView, atIndex: 1)
-        self.view.backgroundColor = UIColor.blackColor()
-        setUpCornerViews()
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        
-        self.view.addSubview(blurView)
-        
+
         playAudioWithVariablePitch(300)
+        setUpAlphaAndBlurView()
+        
+
         
         
     }
@@ -57,6 +60,8 @@ class ViewController: UIViewController {
     func destroyGame(){
         blockView.removeFromSuperview()
         fingerView.removeFromSuperview()
+        backgroundView.removeFromSuperview()
+        backgroundView = nil
         dynamicAnimator = nil
         blockView = nil
         fingerView = nil
@@ -90,7 +95,7 @@ class ViewController: UIViewController {
         let blockDynamicBehavior = UIDynamicItemBehavior(items: [blockView])
         blockDynamicBehavior.elasticity = 1.0
         blockDynamicBehavior.resistance = 0.0
-        blockDynamicBehavior.friction = 0.0
+        blockDynamicBehavior.friction = 0.02
         
         let fingerDynamicBehavior = UIDynamicItemBehavior(items: [fingerView])
         fingerDynamicBehavior.allowsRotation = false
@@ -102,12 +107,28 @@ class ViewController: UIViewController {
         let collisionBehavior = UICollisionBehavior(items: [blockView, fingerView])
         collisionBehavior.collisionMode = UICollisionBehaviorMode.Everything
         collisionBehavior.translatesReferenceBoundsIntoBoundary = true
+        collisionBehavior.collisionDelegate = self
         
         dynamicAnimator.addBehavior(blockPushBehavior)
         dynamicAnimator.addBehavior(collisionBehavior)
         dynamicAnimator.addBehavior(blockDynamicBehavior)
         dynamicAnimator.addBehavior(fingerDynamicBehavior)
         
+    }
+    
+    func setUpAlphaAndBlurView(){
+        let a = CGFloat(1.0)
+        backgroundView = UIView(frame: self.view.frame)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
+        self.view.insertSubview(backgroundView, atIndex: 1)
+        self.view.backgroundColor = UIColor.blackColor()
+        setUpCornerViews()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
+        
+        self.view.addSubview(blurView)
     }
     
     func setUpCornerViews(){
@@ -154,7 +175,7 @@ class ViewController: UIViewController {
         let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
-        calculateAlphaFromDistanceBetweenBlocks()
+        updateAlphaAndBeatRate()
         
         
         if (blockIsContatinedInCornerView()){
@@ -178,6 +199,7 @@ class ViewController: UIViewController {
     }
     
     func timerFinished(){
+        let speaker = Speaker()
         
         if (blockIsContatinedInCornerView()){
             let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
@@ -185,14 +207,14 @@ class ViewController: UIViewController {
                 self.destroyGame()
                 self.createGame()
             }
-            
+            speaker.speakText("You won")
             alert.addAction(okAction)
             self.presentViewController(alert, animated: true, completion: nil)
         }
         timing = false
     }
     
-    func calculateAlphaFromDistanceBetweenBlocks(){
+    func updateAlphaAndBeatRate(){
         let fingerLocation = fingerView.frame.origin
         let blockLocation = blockView.frame.origin
         let delX = abs(fingerLocation.x - blockLocation.x)
@@ -201,7 +223,7 @@ class ViewController: UIViewController {
         let distance = sqrt(square)
         
         
-        var percentAlpha = distance / 100.0
+        var percentAlpha = distance / 200.0
         percentAlpha = 1.0 - percentAlpha
         
         if (percentAlpha > 1.0){
@@ -211,7 +233,23 @@ class ViewController: UIViewController {
         let a = CGFloat(1.0)
         backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
         
-        println(distance)
+//        let beepInterval = distance / 250
+//        println(beepInterval)
+//        
+//        if (!timingBeeps){
+//            let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(beepInterval), target: self, selector: "beep", userInfo: nil, repeats: false)
+//            timingBeeps = true
+//        }
+        //println(distance)
+    }
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
+        if (item1.isEqual(fingerView) && item2.isEqual(blockView) || item1.isEqual(blockView) && item2.isEqual(fingerView)){
+            let speaker = Speaker()
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            speaker.speakText("Collision")
+            
+        }
     }
 
     func playAudioWithVariablePitch(pitch: Float){
