@@ -243,8 +243,23 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     func beep(){
-        AudioServicesPlaySystemSound(1103);
-        //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//        var path = NSBundle.mainBundle().pathForResource("beep", ofType: "wav")
+//        //SystemSoundID soundID;
+//        //AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath:path], &soundID);
+//        //AudioServicesPlaySystemSound(soundID);
+//        //AudioServicesDisposeSystemSoundID(soundID);
+//        let soundID = SystemSoundID()
+//
+//        AudioServicesCreateSystemSoundID(CFURL(NSURL(fileURLWithPath: path), &soundID))
+//        
+//        AudioServicesPlaySystemSound(soundID);
+//        //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//        timingBeeps = false
+        
+        let soundURL = NSBundle.mainBundle().URLForResource("beep", withExtension: "wav")
+        var mySound: SystemSoundID = 0
+        AudioServicesCreateSystemSoundID(soundURL, &mySound)
+        AudioServicesPlaySystemSound(mySound)
         timingBeeps = false
     }
     
