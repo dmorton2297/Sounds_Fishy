@@ -13,9 +13,6 @@
 		5C2951D51B515BA000907250 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C2951D41B515BA000907250 /* Images.xcassets */; };
 		5C2951D81B515BA000907250 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C2951D61B515BA000907250 /* LaunchScreen.xib */; };
 		5C2951E41B515BA000907250 /* WhaleKillerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2951E31B515BA000907250 /* WhaleKillerTests.swift */; };
-		5CCE2EB21B51682B0013C923 /* ToneGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CCE2EB11B51682B0013C923 /* ToneGenerator.m */; };
-		5CCE2EB71B516ADA0013C923 /* ToneReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CCE2EB41B516ADA0013C923 /* ToneReceiver.m */; };
-		5CCE2EB81B516ADA0013C923 /* ToneTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CCE2EB61B516ADA0013C923 /* ToneTranslator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,12 +37,6 @@
 		5C2951E21B515BA000907250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C2951E31B515BA000907250 /* WhaleKillerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhaleKillerTests.swift; sourceTree = "<group>"; };
 		5CCE2EAC1B5168100013C923 /* WhaleKiller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhaleKiller-Bridging-Header.h"; sourceTree = "<group>"; };
-		5CCE2EB01B51682B0013C923 /* ToneGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToneGenerator.h; path = "../../../Handshake-master/Handshake/ToneGenerator.h"; sourceTree = "<group>"; };
-		5CCE2EB11B51682B0013C923 /* ToneGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToneGenerator.m; path = "../../../Handshake-master/Handshake/ToneGenerator.m"; sourceTree = "<group>"; };
-		5CCE2EB31B516ADA0013C923 /* ToneReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToneReceiver.h; path = "../../../Handshake-master/Handshake/ToneReceiver.h"; sourceTree = "<group>"; };
-		5CCE2EB41B516ADA0013C923 /* ToneReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToneReceiver.m; path = "../../../Handshake-master/Handshake/ToneReceiver.m"; sourceTree = "<group>"; };
-		5CCE2EB51B516ADA0013C923 /* ToneTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToneTranslator.h; path = "../../../Handshake-master/Handshake/ToneTranslator.h"; sourceTree = "<group>"; };
-		5CCE2EB61B516ADA0013C923 /* ToneTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToneTranslator.m; path = "../../../Handshake-master/Handshake/ToneTranslator.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,12 +80,6 @@
 			children = (
 				5C2951CD1B515BA000907250 /* AppDelegate.swift */,
 				5CCE2EAC1B5168100013C923 /* WhaleKiller-Bridging-Header.h */,
-				5CCE2EB01B51682B0013C923 /* ToneGenerator.h */,
-				5CCE2EB31B516ADA0013C923 /* ToneReceiver.h */,
-				5CCE2EB41B516ADA0013C923 /* ToneReceiver.m */,
-				5CCE2EB51B516ADA0013C923 /* ToneTranslator.h */,
-				5CCE2EB61B516ADA0013C923 /* ToneTranslator.m */,
-				5CCE2EB11B51682B0013C923 /* ToneGenerator.m */,
 				5C2951CF1B515BA000907250 /* ViewController.swift */,
 				5C2951D11B515BA000907250 /* Main.storyboard */,
 				5C2951D41B515BA000907250 /* Images.xcassets */,
@@ -229,11 +214,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CCE2EB71B516ADA0013C923 /* ToneReceiver.m in Sources */,
 				5C2951D01B515BA000907250 /* ViewController.swift in Sources */,
-				5CCE2EB81B516ADA0013C923 /* ToneTranslator.m in Sources */,
 				5C2951CE1B515BA000907250 /* AppDelegate.swift in Sources */,
-				5CCE2EB21B51682B0013C923 /* ToneGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

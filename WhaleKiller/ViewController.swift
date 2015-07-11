@@ -38,9 +38,14 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        
+        self.view.addSubview(blurView)
         
         
-
+        
+        
     }
     
     func destroyGame(){
@@ -72,7 +77,7 @@ class ViewController: UIViewController {
     func setupDynamicAnimator(){
         dynamicAnimator = UIDynamicAnimator(referenceView: self.view)
         
-        let blockPushBehavior = UIPushBehavior(items: [blockView], mode: UIPushBehaviorMode.Instantaneous)
+        let blockPushBehavior = UIPushBehavior(items: [blockView], mode: UIPushBehaviorMode.Continuous)
         blockPushBehavior.magnitude = 0.30
         blockPushBehavior.angle = 0.90
         
@@ -143,6 +148,8 @@ class ViewController: UIViewController {
         let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
+        calculateAlphaFromDistanceBetweenBlocks()
+        
         
         if (blockIsContatinedInCornerView()){
             if (!timing){
@@ -180,7 +187,25 @@ class ViewController: UIViewController {
     }
     
     func calculateAlphaFromDistanceBetweenBlocks(){
+        let fingerLocation = fingerView.frame.origin
+        let blockLocation = blockView.frame.origin
+        let delX = abs(fingerLocation.x - blockLocation.x)
+        let delY = abs(fingerLocation.y - blockLocation.y)
+        let square = pow(delX, 2.0)+pow(delY, 2.0)
+        let distance = sqrt(square)
         
+        
+        var percentAlpha = distance / 100.0
+        percentAlpha = 1.0 - percentAlpha
+        
+        if (percentAlpha > 1.0){
+            percentAlpha = 1.0
+        }
+        
+        let a = CGFloat(1.0)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
+        
+        println(distance)
     }
 }
 
