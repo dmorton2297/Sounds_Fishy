@@ -42,9 +42,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         spawnFingerBlock()
         setupDynamicAnimator()
         setUpAlphaAndBlurView()
-        
-        
-        
     }
     
     func destroyGame(){
@@ -114,7 +111,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         
@@ -127,7 +124,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         let xOrigin = screenOrigin.x
         let yOrigin = screenOrigin.y
-        let cornerSideLength = CGFloat(80)
+        let cornerSideLength = CGFloat(150)
         let adjustedScreenWidth = self.view.frame.width - cornerSideLength
         let adjustedScreenHeight = self.view.frame.height - cornerSideLength
         
@@ -192,9 +189,9 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let speaker = Speaker()
         
         if (blockIsContatinedInCornerView()){
+            self.destroyGame()
             let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default){(alert) -> Void in
-                self.destroyGame()
                 self.createGame()
             }
             speaker.speakText("You won")
@@ -211,7 +208,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let delY = abs(fingerLocation.y - blockLocation.y)
         let square = pow(delX, 2.0)+pow(delY, 2.0)
         let distance = sqrt(square)
-        
         
         var percentAlpha = distance / 200.0
         percentAlpha = 1.0 - percentAlpha
@@ -230,7 +226,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(beepInterval), target: self, selector: "beep", userInfo: nil, repeats: false)
             timingBeeps = true
         }
-        //println(distance)
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
