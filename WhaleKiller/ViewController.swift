@@ -23,6 +23,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var timingBeeps = false
     var backgroundView : UIView!
     var gameOver = false
+    var gameStarted = false
     
     //MARK: View did load
     //setup UIDynamics and collision behaviors
@@ -30,10 +31,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         //MARK: Game loop starts
         let speaker = Speaker()
         super.viewDidLoad()
-        createGame()
-        var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
+        // createGame()
+        //var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
         
-        speaker.speakText("The game has started")
+        speaker.speakText("To begin the game, press and hold you home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
         //var a = SinePlayer()
     }
     func createGame(){
@@ -172,22 +173,30 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    //MARK: Gestures
+    //MARK: Gestures, and beginning of game control
     @IBAction func userPanned(sender: AnyObject) {
-        if (fingerView == nil || blockView == nil){ return }
-        let panGesture = sender as! UIPanGestureRecognizer
-        let coordinate = panGesture.locationInView(self.view)
-        let xCoord = (coordinate.x) - (fingerBlockSideLength / 2)
-        let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
-        fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
-        dynamicAnimator.updateItemUsingCurrentState(fingerView)
-        updateAlphaAndBeatRate()
-        
-        
-        if (blockIsContatinedInCornerView()){
-            if (!timing){
-                timing = true
-                var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
+        println("User panned")
+        if ((fingerView == nil || blockView == nil) && gameStarted){ return }
+        if (!gameStarted) {
+            gameStarted = true
+            createGame()
+            var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
+        }
+        else{
+            let panGesture = sender as! UIPanGestureRecognizer
+            let coordinate = panGesture.locationInView(self.view)
+            let xCoord = (coordinate.x) - (fingerBlockSideLength / 2)
+            let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
+            fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
+            dynamicAnimator.updateItemUsingCurrentState(fingerView)
+            updateAlphaAndBeatRate()
+            
+            
+            if (blockIsContatinedInCornerView()){
+                if (!timing){
+                    timing = true
+                    var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
+                }
             }
         }
     }
