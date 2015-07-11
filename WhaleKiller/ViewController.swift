@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         dynamicAnimator = UIDynamicAnimator(referenceView: self.view)
         
         let blockPushBehavior = UIPushBehavior(items: [blockView], mode: UIPushBehaviorMode.Instantaneous)
-        blockPushBehavior.magnitude = 0.25
+        blockPushBehavior.magnitude = 0.30
         blockPushBehavior.angle = 0.90
         
         let blockDynamicBehavior = UIDynamicItemBehavior(items: [blockView])
@@ -53,14 +53,33 @@ class ViewController: UIViewController {
         blockDynamicBehavior.resistance = 0.0
         blockDynamicBehavior.friction = 0.0
         
+        let fingerDynamicBehavior = UIDynamicItemBehavior(items: [fingerView])
+        fingerDynamicBehavior.allowsRotation = false
+        fingerDynamicBehavior.density = 100000
+        fingerDynamicBehavior.resistance = 0.0
+        fingerDynamicBehavior.friction = 0.0
         
-        let collisionBehavior = UICollisionBehavior(items: [blockView])
+        
+        let collisionBehavior = UICollisionBehavior(items: [blockView, fingerView])
         collisionBehavior.collisionMode = UICollisionBehaviorMode.Everything
         collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         
         dynamicAnimator.addBehavior(blockPushBehavior)
         dynamicAnimator.addBehavior(collisionBehavior)
         dynamicAnimator.addBehavior(blockDynamicBehavior)
+        dynamicAnimator.addBehavior(fingerDynamicBehavior)
+        
+    }
+    
+    func setUpCornerViews(){
+        let screenOrigin = self.view.frame.origin
+        let xOrigin = screenOrigin.x
+        let yOrigin = screenOrigin.y
+        let cornerSideLength = CGFloat(80)
+        
+        let leftTopCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
+        let leftCornerView = UIView(frame: leftTopCornerRect)
+        
         
     }
     
@@ -69,9 +88,9 @@ class ViewController: UIViewController {
         let coordinate = panGesture.locationInView(self.view)
         let xCoord = (coordinate.x) - (fingerBlockSideLength / 2)
         let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
-        
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
         
+        dynamicAnimator.updateItemUsingCurrentState(fingerView)
     }
 }
 
