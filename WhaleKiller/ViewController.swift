@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -18,11 +19,16 @@ class ViewController: UIViewController {
     var cornerViews = [UIView]()
     var timing = false
     var backgroundView : UIView!
+    var audioEngine:AVAudioEngine!
+    var audioFile:AVAudioFile!
+    var audioPlayer:AVAudioPlayer!
+    var audioNode:AVAudioNode!
+   // var sampleRate:CGFloat()
     
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         createGame()
     }
     
@@ -43,7 +49,7 @@ class ViewController: UIViewController {
         
         self.view.addSubview(blurView)
         
-        
+        playAudioWithVariablePitch(300)
         
         
     }
@@ -207,5 +213,44 @@ class ViewController: UIViewController {
         
         println(distance)
     }
+
+    func playAudioWithVariablePitch(pitch: Float){
+        //this makes the file path for the tapping sound that is stock with the phone... hopefully
+        var filePath = NSBundle.mainBundle().pathForResource("tap", ofType: "aif")
+        var filePathUrl = NSURL.fileURLWithPath(filePath!)
+
+        //create the audio engine
+        audioEngine = AVAudioEngine()
+
+        audioPlayer = AVAudioPlayer(contentsOfURL: filePathUrl, error: nil)
+        audioPlayer.enableRate = true
+        //setting the numberOfLoops to a negative number makes it loop infinitely until stop is called.
+        audioPlayer.numberOfLoops = -1
+      //  audioPlayer.settings.updateValue(sampleRate, forKey: AVSampleRateKey)
+        audioPlayer.play()
+
+    }
+
+//    func playAudioWithVariablePitch(pitch: Float){
+//        audioPlayer.stop()
+//        audioEngine.stop()
+//        audioEngine.reset()
+
+//        var audioPlayerNode = AVAudioUnit()
+//        var audioUnitEffect = AVAudioUnitEffect.init!(AudioComponentDescription audioComponentDescription: kAudioUnitType_Effect)
+//        audioEngine.attachNode(audioPlayerNode)
+//
+//        var changePitchEffect = AVAudioUnitTimePitch()
+//        changePitchEffect.pitch = pitch
+//        audioEngine.attachNode(changePitchEffect)
+//
+//        audioEngine.connect(audioPlayerNode, to: changePitchEffect, format: nil)
+//        audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
+//
+//        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+//        audioEngine.startAndReturnError(nil)
+//        
+//        audioPlayerNode.play()
+//    }
 }
 
