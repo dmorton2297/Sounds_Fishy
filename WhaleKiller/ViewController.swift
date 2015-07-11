@@ -8,6 +8,7 @@
 
 import UIKit
 import AudioToolbox
+import AVFoundation
 
 class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
@@ -22,9 +23,13 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
+        let speaker = Speaker()
         super.viewDidLoad()
         createGame()
         var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "calculateAlphaFromDistanceBetweenBlocks", userInfo: nil, repeats: true)
+        
+        speaker.speakText("The game has started")
+        //var a = SinePlayer()
     }
 
     
@@ -157,7 +162,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
         fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
         dynamicAnimator.updateItemUsingCurrentState(fingerView)
-        calculateAlphaFromDistanceBetweenBlocks()
+        updateAlphaAndBeatRate()
         
         
         if (blockIsContatinedInCornerView()){
@@ -181,6 +186,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     func timerFinished(){
+        let speaker = Speaker()
         
         if (blockIsContatinedInCornerView()){
             let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
@@ -188,14 +194,14 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
                 self.destroyGame()
                 self.createGame()
             }
-            
+            speaker.speakText("You won")
             alert.addAction(okAction)
             self.presentViewController(alert, animated: true, completion: nil)
         }
         timing = false
     }
     
-    func calculateAlphaFromDistanceBetweenBlocks(){
+    func updateAlphaAndBeatRate(){
         let fingerLocation = fingerView.frame.origin
         let blockLocation = blockView.frame.origin
         let delX = abs(fingerLocation.x - blockLocation.x)
@@ -219,10 +225,18 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
         if (item1.isEqual(fingerView) && item2.isEqual(blockView) || item1.isEqual(blockView) && item2.isEqual(fingerView)){
+            let speaker = Speaker()
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            speaker.speakText("Collision")
             
         }
     }
+    
+    func setDelayForNextBeep(){
+        
+    }
+    
+    
     
 }
 
