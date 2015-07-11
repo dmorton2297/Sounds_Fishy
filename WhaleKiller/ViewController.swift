@@ -19,6 +19,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var dynamicAnimator : UIDynamicAnimator!
     var cornerViews = [UIView]()
     var timing = false
+    var timingBeeps = false
     var backgroundView : UIView!
     
     //setup UIDynamics and collision behaviors
@@ -26,12 +27,14 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let speaker = Speaker()
         super.viewDidLoad()
         createGame()
-        var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "calculateAlphaFromDistanceBetweenBlocks", userInfo: nil, repeats: true)
+        var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
         
         speaker.speakText("The game has started")
         //var a = SinePlayer()
+        
+        
     }
-
+    
     
     func createGame(){
         self.view.accessibilityDecrement()
@@ -40,7 +43,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         setupDynamicAnimator()
         setUpAlphaAndBlurView()
         
-       
+        
         
     }
     
@@ -220,7 +223,14 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let a = CGFloat(1.0)
         backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
         
-        println(distance)
+        let beepInterval = distance / 250
+        println(beepInterval)
+        
+        if (!timingBeeps){
+            let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(beepInterval), target: self, selector: "beep", userInfo: nil, repeats: false)
+            timingBeeps = true
+        }
+        //println(distance)
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
@@ -232,8 +242,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    func setDelayForNextBeep(){
-        
+    func beep(){
+        //AudioServicesPlaySystemSound(kSystemSoundID);
+        //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        timingBeeps = false
     }
     
     

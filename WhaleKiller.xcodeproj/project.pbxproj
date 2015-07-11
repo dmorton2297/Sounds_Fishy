@@ -15,6 +15,7 @@
 		5C2951E41B515BA000907250 /* WhaleKillerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2951E31B515BA000907250 /* WhaleKillerTests.swift */; };
 		5CA95F401B51B7A3009129C1 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA95F3F1B51B7A3009129C1 /* MenuViewController.swift */; };
 		5CA95F421B51B7F7009129C1 /* Speaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA95F411B51B7F7009129C1 /* Speaker.swift */; };
+		5CA95F441B51C132009129C1 /* Beep Ping-SoundBible.com-217088958.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5CA95F431B51C132009129C1 /* Beep Ping-SoundBible.com-217088958.wav */; };
 		5CCE2EBE1B519D440013C923 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CCE2EBD1B519D440013C923 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		5C2951E31B515BA000907250 /* WhaleKillerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhaleKillerTests.swift; sourceTree = "<group>"; };
 		5CA95F3F1B51B7A3009129C1 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		5CA95F411B51B7F7009129C1 /* Speaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speaker.swift; sourceTree = "<group>"; };
+		5CA95F431B51C132009129C1 /* Beep Ping-SoundBible.com-217088958.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Beep Ping-SoundBible.com-217088958.wav"; sourceTree = "<group>"; };
 		5CCE2EAC1B5168100013C923 /* WhaleKiller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhaleKiller-Bridging-Header.h"; sourceTree = "<group>"; };
 		5CCE2EBB1B519D160013C923 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5CCE2EBD1B519D440013C923 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -94,6 +96,7 @@
 				5C2951D11B515BA000907250 /* Main.storyboard */,
 				5C2951D41B515BA000907250 /* Images.xcassets */,
 				5C2951D61B515BA000907250 /* LaunchScreen.xib */,
+				5CA95F431B51C132009129C1 /* Beep Ping-SoundBible.com-217088958.wav */,
 				5C2951CB1B515BA000907250 /* Supporting Files */,
 				5CA95F3F1B51B7A3009129C1 /* MenuViewController.swift */,
 				5CA95F411B51B7F7009129C1 /* Speaker.swift */,
@@ -208,6 +211,7 @@
 			files = (
 				5C2951D31B515BA000907250 /* Main.storyboard in Resources */,
 				5C2951D81B515BA000907250 /* LaunchScreen.xib in Resources */,
+				5CA95F441B51C132009129C1 /* Beep Ping-SoundBible.com-217088958.wav in Resources */,
 				5C2951D51B515BA000907250 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
