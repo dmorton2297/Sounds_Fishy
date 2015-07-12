@@ -23,6 +23,6 @@ class MenuViewController: UIViewController {
 
     @IBAction func directionsButtonClicked(sender: AnyObject) {
         let speaker = Speaker()
-        speaker.speakText("This is where the directions will go")
+        speaker.speakText("Locate the fish by pressing and holding your finger on the screen and then moving it around.  You will hear beeps that increase in frequency as you get closer to the fish. You win when you corral the fish into the corner for two seconds. Press start to begin.")
     }
 }

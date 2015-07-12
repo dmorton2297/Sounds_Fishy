@@ -175,7 +175,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     //MARK: Gestures, and beginning of game control
     @IBAction func userPanned(sender: AnyObject) {
-        println("User panned")
         if ((fingerView == nil || blockView == nil) && gameStarted){ return }
         if (!gameStarted) {
             gameStarted = true
