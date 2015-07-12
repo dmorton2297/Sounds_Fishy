@@ -94,22 +94,22 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let topLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topLeftCornerView = UIView(frame: topLeftCornerRect)
         cornerViews.append(topLeftCornerView)
-        topLeftCornerView.backgroundColor = UIColor.blueColor()
+        topLeftCornerView.backgroundColor = UIColor.clearColor()
         
         let topRightCornerRect = CGRectMake(adjustedScreenWidth , yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topRightCornerView = UIView(frame: topRightCornerRect)
         cornerViews.append(topRightCornerView)
-        topRightCornerView.backgroundColor = UIColor.blueColor()
+        topRightCornerView.backgroundColor = UIColor.clearColor()
         
         let bottomLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
         cornerViews.append(bottomLeftCornerView)
-        bottomLeftCornerView.backgroundColor = UIColor.blueColor()
+        bottomLeftCornerView.backgroundColor = UIColor.clearColor()
         
         let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
         cornerViews.append(bottomRightCornerView)
-        bottomRightCornerView.backgroundColor = UIColor.blueColor()
+        bottomRightCornerView.backgroundColor = UIColor.clearColor()
 
         
         self.view.insertSubview(topLeftCornerView, atIndex: 0)
