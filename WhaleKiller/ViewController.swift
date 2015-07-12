@@ -36,6 +36,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
     }
     
+
     func createGame(){
         self.view.accessibilityDecrement()
         spawnBlock()
