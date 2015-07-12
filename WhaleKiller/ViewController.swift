@@ -29,7 +29,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var blurView : UIView!
     var newGameTimer : NSTimer!
     
-    //MARK: View did load
+    //MARK: Game initializatoin
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
         
@@ -39,7 +39,13 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. When finished, press home and slide your finger on the screen to start.")
     }
     
-
+    //hide the status bar on the screen
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    
+    //Create all the UIViews and Dynamic Behaviors neccessary for the game
     func createGame(){
         spawnBlock()
         spawnFingerBlock()
@@ -47,6 +53,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         setUpAlphaAndBlurView()
     }
     
+    
+    //remove all views and behaviors neccessary to stage game for restart
     func destroyGame(){
         dynamicAnimator.removeAllBehaviors()
         blockView.removeFromSuperview()
@@ -62,7 +70,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    //MARK: setup views
+    //MARK: Setup views
+    //creating the "fish" block
     func spawnBlock(){
         let xCenter = CGFloat((self.view.frame.width / 2))
         let yCenter = CGFloat((self.view.frame.height / 2))
@@ -72,6 +81,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         self.view.addSubview(blockView)
     }
     
+    //create the block that follows the users finger
     func spawnFingerBlock(){
         fingerView = UIView(frame: CGRectMake(10.0, 10.0, fingerBlockSideLength, fingerBlockSideLength))
         fingerView.backgroundColor = UIColor.greenColor()
@@ -79,6 +89,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     
+    //set up the corner zones (corner zones are areas
     func setUpCornerViews(){
         
         let screenOrigin = self.view.frame.origin
@@ -117,7 +128,23 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         self.view.insertSubview(bottomRightCornerView, atIndex: 0)
     }
     
-    //MARK: setup animations
+    //setup blurview, and alpha for lightening and darkening throughout the game
+    func setUpAlphaAndBlurView(){
+        let a = CGFloat(1.0)
+        backgroundView = UIView(frame: self.view.frame)
+        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
+        self.view.insertSubview(backgroundView, atIndex: 1)
+        self.view.backgroundColor = UIColor.blackColor()
+        setUpCornerViews()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
+        
+        self.view.addSubview(blurView)
+    }
+    
+    //MARK: Setup animations
     func setupDynamicAnimator(){
         dynamicAnimator = UIDynamicAnimator(referenceView: self.view)
         
@@ -150,27 +177,16 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
     }
     
+    //generates an angle of force that will be applied to the block view throughout the game
     func randomizeAngleForNewGame() -> CGFloat
     {
         let a = CGFloat(arc4random_uniform(UInt32(628)))
         return (a / 100)
     }
     
-    func setUpAlphaAndBlurView(){
-        let a = CGFloat(1.0)
-        backgroundView = UIView(frame: self.view.frame)
-        backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: 0.0)
-        self.view.insertSubview(backgroundView, atIndex: 1)
-        self.view.backgroundColor = UIColor.blackColor()
-        setUpCornerViews()
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.view.frame
-        
-        self.view.addSubview(blurView)
-    }
     
+    //MARK: Gestures, and beginning of game control
+    //this event will restart the game
     @IBAction func userLongPressed(sender: AnyObject) {
         if (gameOver){
             self.gameOver = false
@@ -181,9 +197,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
-    //MARK: Gestures, and beginning of game control
+    //this event controls the location of the finger view
+    //it also will start the game if the user has not done so yet
     @IBAction func userPanned(sender: AnyObject) {
-        //MARK: game loop starts
+        //MARK: game loop starts here
         if ((fingerView == nil || blockView == nil) && gameStarted){ return }
         if (!gameStarted) {
             gameStarted = true
@@ -210,6 +227,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     //MARK: Game logic
+    //checks to see if the winningTimer should start. This method infers that the block is in one of the cornerviews
     func blockIsContatinedInCornerView() -> Bool{
         let blockCenterX = blockView.frame.origin.x + (blockSideLength / 2)
         let blockCenterY = blockView.frame.origin.y + (blockSideLength / 2)
@@ -222,17 +240,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         return false
     }
     
+    //if the timer is finished and the block is still in a cornerview, communicate to the user that they have won the game
     func timerFinished(){
         if (blockIsContatinedInCornerView()){
             self.destroyGame()
-            //            let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-            //            let okAction = UIAlertAction(title: "Yay!", style: UIAlertActionStyle.Default){(alert) -> Void in
-            //                self.createGame()
-            //            }
-            //            speaker.speakText("You won")
-            //            alert.addAction(okAction)
-            //            self.presentViewController(alert, animated: true, completion: nil)
-            //        }
             gameOver = true
             promptUserToLongPressForNewGame()
             newGameTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "promptUserToLongPressForNewGame", userInfo: nil, repeats: true)
@@ -242,6 +253,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         timing = false
     }
     
+    //This method is called by the gameLoopTimer to update the beeping, and alpha of the screen
     func updateGame(){
         if (dynamicAnimator.behaviors.count != 0){
             let fingerLocation = fingerView.frame.origin
@@ -276,6 +288,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     //MARK: Sound
+    //vibrate the phone if the users finger collides with the block
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint) {
         if (item1.isEqual(fingerView) && item2.isEqual(blockView) || item1.isEqual(blockView) && item2.isEqual(fingerView)){
             let speaker = Speaker()
@@ -285,6 +298,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     }
     
+    //this beep sound is used for the "sonar" effect of the game
     func beep(){
         let soundURL = NSBundle.mainBundle().URLForResource("beep", withExtension: "wav")
         var mySound: SystemSoundID = 0
@@ -293,6 +307,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         timingBeeps = false
     }
     
+    //After the game is over, prompt the user to long press to restart the game. This is a selector of the timer "timer" in updategame
     func promptUserToLongPressForNewGame(){
         let speaker = Speaker()
         speaker.speakText("You won! Long press to start a new game.")
