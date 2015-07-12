@@ -85,23 +85,24 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let cornerSideLength = CGFloat(100)
         let adjustedScreenWidth = self.view.frame.width - cornerSideLength
         let adjustedScreenHeight = self.view.frame.height - cornerSideLength
+        let pixelHangoverLength = CGFloat(10) //the amount of pixels that a view will "hangover" the boundaries
         
-        let topLeftCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
+        let topLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topLeftCornerView = UIView(frame: topLeftCornerRect)
         cornerViews.append(topLeftCornerView)
         topLeftCornerView.backgroundColor = UIColor.blueColor()
         
-        let topRightCornerRect = CGRectMake(xOrigin + adjustedScreenWidth , yOrigin, cornerSideLength, cornerSideLength)
+        let topRightCornerRect = CGRectMake(adjustedScreenWidth , yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topRightCornerView = UIView(frame: topRightCornerRect)
         cornerViews.append(topRightCornerView)
         topRightCornerView.backgroundColor = UIColor.blueColor()
         
-        let bottomLeftCornerRect = CGRectMake(0, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
         cornerViews.append(bottomLeftCornerView)
         bottomLeftCornerView.backgroundColor = UIColor.blueColor()
         
-        let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
         cornerViews.append(bottomRightCornerView)
         bottomRightCornerView.backgroundColor = UIColor.blueColor()
