@@ -10,7 +10,6 @@ import UIKit
 import AudioToolbox
 import AVFoundation
 
-var gameInterrupted = false
 var gameLoopTimer = NSTimer()
 
 class ViewController: UIViewController, UICollisionBehaviorDelegate {
@@ -32,9 +31,15 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     //MARK: View did load
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
+        
+        UIApplication.sharedApplication().statusBarHidden = true
         let speaker = Speaker()
         super.viewDidLoad()
-        speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
+        speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. When finished, press home and slide your finger on the screen to start.")
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     func createGame(){
         spawnBlock()
@@ -170,6 +175,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     @IBAction func userLongPressed(sender: AnyObject) {
         if (gameOver){
             self.gameOver = false
+            let speaker = Speaker()
+            speaker.speakText("Begin game")
             self.createGame()
         }
     }
@@ -235,9 +242,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     func updateGame(){
-        if (gameInterrupted){
-            
-        }
         if (dynamicAnimator.behaviors.count != 0){
             let fingerLocation = fingerView.frame.origin
             let blockLocation = blockView.frame.origin
