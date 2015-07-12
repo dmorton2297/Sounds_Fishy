@@ -37,6 +37,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let speaker = Speaker()
         super.viewDidLoad()
         speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. When finished, press home and slide your finger on the screen to start.")
+        
+        
     }
     
     //hide the status bar on the screen
@@ -137,7 +139,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         
