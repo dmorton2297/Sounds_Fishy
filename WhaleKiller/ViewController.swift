@@ -137,7 +137,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         self.view.backgroundColor = UIColor.blackColor()
         setUpCornerViews()
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         
