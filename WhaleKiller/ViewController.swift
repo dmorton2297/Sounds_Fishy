@@ -288,9 +288,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     func promptUserToLongPressForNewGame(){
         let speaker = Speaker()
         speaker.speakText("You won! Long press to start a new game.")
+        
     }
-    
-    
-    
 }
 

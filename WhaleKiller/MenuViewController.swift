@@ -5,7 +5,7 @@
 //  Created by Dan Morton on 7/11/15.
 //  Copyright (c) 2015 Dan Morton. All rights reserved.
 //
-
+ 
 import UIKit
 
 class MenuViewController: UIViewController {
@@ -23,6 +23,6 @@ class MenuViewController: UIViewController {
 
     @IBAction func directionsButtonClicked(sender: AnyObject) {
         let speaker = Speaker()
-        speaker.speakText("Locate the fish by pressing and holding your finger on the screen and then moving it around.  You will hear beeps that increase in frequency as you get closer to the fish. You win when you corral the fish into the corner for two seconds. Press start to begin.")
+        speaker.speakText("Locate the fish by pressing and holding your finger on the screen and then moving it around.  You will hear beeps that increase in frequency as you get closer to the fish. You win when you corral the fish into a corner for two seconds. Press start to begin.")
     }
 }
