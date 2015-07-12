@@ -55,6 +55,7 @@
                             <constraint firstItem="TaP-ho-rou" firstAttribute="leading" secondItem="DEc-8l-DYd" secondAttribute="leading" id="tQL-G2-iSZ"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7PG-OY-08b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -75,8 +76,10 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Swt-eI-YCB" appends="YES" id="eAc-UZ-S9f"/>
+                            <outletCollection property="gestureRecognizers" destination="P0R-RI-XiC" appends="YES" id="LJc-nB-fPu"/>
                         </connections>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Swt-eI-YCB">
@@ -84,6 +87,11 @@
                         <action selector="userPanned:" destination="BYZ-38-t0r" id="2hl-au-oW4"/>
                     </connections>
                 </panGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="P0R-RI-XiC">
+                    <connections>
+                        <action selector="userLongPressed:" destination="BYZ-38-t0r" id="haY-Dn-DqS"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
         </scene>
     </scenes>
