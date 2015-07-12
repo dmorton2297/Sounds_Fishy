@@ -82,29 +82,30 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         let xOrigin = screenOrigin.x
         let yOrigin = screenOrigin.y
-        let cornerSideLength = CGFloat(80)
+        let cornerSideLength = CGFloat(100)
         let adjustedScreenWidth = self.view.frame.width - cornerSideLength
         let adjustedScreenHeight = self.view.frame.height - cornerSideLength
         
         let topLeftCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
         let topLeftCornerView = UIView(frame: topLeftCornerRect)
         cornerViews.append(topLeftCornerView)
-        topLeftCornerView.backgroundColor = UIColor.clearColor()
+        topLeftCornerView.backgroundColor = UIColor.blueColor()
         
         let topRightCornerRect = CGRectMake(xOrigin + adjustedScreenWidth , yOrigin, cornerSideLength, cornerSideLength)
         let topRightCornerView = UIView(frame: topRightCornerRect)
         cornerViews.append(topRightCornerView)
-        topRightCornerView.backgroundColor = UIColor.clearColor()
+        topRightCornerView.backgroundColor = UIColor.blueColor()
         
         let bottomLeftCornerRect = CGRectMake(0, adjustedScreenHeight, cornerSideLength, cornerSideLength)
         let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
         cornerViews.append(bottomLeftCornerView)
-        bottomLeftCornerView.backgroundColor = UIColor.clearColor()
+        bottomLeftCornerView.backgroundColor = UIColor.blueColor()
         
         let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength, cornerSideLength)
         let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
         cornerViews.append(bottomRightCornerView)
-        bottomRightCornerView.backgroundColor = UIColor.clearColor()
+        bottomRightCornerView.backgroundColor = UIColor.blueColor()
+
         
         self.view.insertSubview(topLeftCornerView, atIndex: 0)
         self.view.insertSubview(topRightCornerView, atIndex: 0)
@@ -195,7 +196,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             if (blockIsContatinedInCornerView()){
                 if (!timing){
                     timing = true
-                    var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
+                    var timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
                 }
             }
         }
