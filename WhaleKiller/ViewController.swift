@@ -10,6 +10,9 @@ import UIKit
 import AudioToolbox
 import AVFoundation
 
+var gameInterrupted = false
+var gameLoopTimer = NSTimer()
+
 class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     //MARK: Variables
@@ -29,15 +32,11 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     //MARK: View did load
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
-        //MARK: Game loop starts
         let speaker = Speaker()
         super.viewDidLoad()
-        
         speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
-        //var a = SinePlayer()
     }
     func createGame(){
-        self.view.accessibilityDecrement()
         spawnBlock()
         spawnFingerBlock()
         setupDynamicAnimator()
@@ -177,11 +176,12 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     
     //MARK: Gestures, and beginning of game control
     @IBAction func userPanned(sender: AnyObject) {
+        //MARK: game loop starts
         if ((fingerView == nil || blockView == nil) && gameStarted){ return }
         if (!gameStarted) {
             gameStarted = true
             createGame()
-            var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
+            gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateGame", userInfo: nil, repeats: true)
         }
         else{
             let panGesture = sender as! UIPanGestureRecognizer
@@ -190,7 +190,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             let yCoord = (coordinate.y) - (fingerBlockSideLength / 2)
             fingerView.frame = CGRectMake(xCoord, yCoord, fingerBlockSideLength, fingerBlockSideLength)
             dynamicAnimator.updateItemUsingCurrentState(fingerView)
-            updateAlphaAndBeatRate()
+            updateGame()
             
             
             if (blockIsContatinedInCornerView()){
@@ -234,7 +234,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         timing = false
     }
     
-    func updateAlphaAndBeatRate(){
+    func updateGame(){
+        if (gameInterrupted){
+            
+        }
         if (dynamicAnimator.behaviors.count != 0){
             let fingerLocation = fingerView.frame.origin
             let blockLocation = blockView.frame.origin
