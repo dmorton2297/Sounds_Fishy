@@ -34,7 +34,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         // createGame()
         //var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
         
-        speaker.speakText("To begin the game, press and hold you home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
+        speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
         //var a = SinePlayer()
     }
     func createGame(){
