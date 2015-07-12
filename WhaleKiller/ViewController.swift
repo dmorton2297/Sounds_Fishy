@@ -27,6 +27,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var gameOver = false
     var gameStarted = false
     var blurView : UIView!
+    var newGameTimer : NSTimer!
     
     //MARK: View did load
     //setup UIDynamics and collision behaviors
@@ -176,6 +177,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         if (gameOver){
             self.gameOver = false
             let speaker = Speaker()
+            newGameTimer.invalidate()
             speaker.speakText("Begin game")
             self.createGame()
         }
@@ -234,7 +236,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             //            self.presentViewController(alert, animated: true, completion: nil)
             //        }
             gameOver = true
-            NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "promptUserToLongPressForNewGame", userInfo: nil, repeats: false)
+            promptUserToLongPressForNewGame()
+            newGameTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "promptUserToLongPressForNewGame", userInfo: nil, repeats: true)
             
         }
         
