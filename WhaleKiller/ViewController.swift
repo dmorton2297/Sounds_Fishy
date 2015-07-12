@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var backgroundView : UIView!
     var gameOver = false
     var gameStarted = false
+    var blurView : UIView!
     
     //MARK: View did load
     //setup UIDynamics and collision behaviors
@@ -31,8 +32,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         //MARK: Game loop starts
         let speaker = Speaker()
         super.viewDidLoad()
-        // createGame()
-        //var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
         
         speaker.speakText("To begin the game, press and hold your home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
         //var a = SinePlayer()
@@ -50,9 +49,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         blockView.removeFromSuperview()
         fingerView.removeFromSuperview()
         backgroundView.removeFromSuperview()
+        blurView.removeFromSuperview()
         backgroundView = nil
-        //     dynamicAnimator = nil
         blockView = nil
+        blurView = nil
         fingerView = nil
         for x in cornerViews{
             x.removeFromSuperview()
@@ -82,29 +82,31 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         
         let xOrigin = screenOrigin.x
         let yOrigin = screenOrigin.y
-        let cornerSideLength = CGFloat(80)
+        let cornerSideLength = CGFloat(100)
         let adjustedScreenWidth = self.view.frame.width - cornerSideLength
         let adjustedScreenHeight = self.view.frame.height - cornerSideLength
+        let pixelHangoverLength = CGFloat(10) //the amount of pixels that a view will "hangover" the boundaries
         
-        let topLeftCornerRect = CGRectMake(xOrigin, yOrigin, cornerSideLength, cornerSideLength)
+        let topLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topLeftCornerView = UIView(frame: topLeftCornerRect)
         cornerViews.append(topLeftCornerView)
-        topLeftCornerView.backgroundColor = UIColor.clearColor()
+        topLeftCornerView.backgroundColor = UIColor.blueColor()
         
-        let topRightCornerRect = CGRectMake(xOrigin + adjustedScreenWidth , yOrigin, cornerSideLength, cornerSideLength)
+        let topRightCornerRect = CGRectMake(adjustedScreenWidth , yOrigin - pixelHangoverLength, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let topRightCornerView = UIView(frame: topRightCornerRect)
         cornerViews.append(topRightCornerView)
-        topRightCornerView.backgroundColor = UIColor.clearColor()
+        topRightCornerView.backgroundColor = UIColor.blueColor()
         
-        let bottomLeftCornerRect = CGRectMake(0, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomLeftCornerRect = CGRectMake(xOrigin - pixelHangoverLength, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomLeftCornerView = UIView(frame: bottomLeftCornerRect)
         cornerViews.append(bottomLeftCornerView)
-        bottomLeftCornerView.backgroundColor = UIColor.clearColor()
+        bottomLeftCornerView.backgroundColor = UIColor.blueColor()
         
-        let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength, cornerSideLength)
+        let bottomRightCornerRect = CGRectMake(adjustedScreenWidth, adjustedScreenHeight, cornerSideLength + pixelHangoverLength, cornerSideLength + pixelHangoverLength)
         let bottomRightCornerView = UIView(frame: bottomRightCornerRect)
         cornerViews.append(bottomRightCornerView)
-        bottomRightCornerView.backgroundColor = UIColor.clearColor()
+        bottomRightCornerView.backgroundColor = UIColor.blueColor()
+
         
         self.view.insertSubview(topLeftCornerView, atIndex: 0)
         self.view.insertSubview(topRightCornerView, atIndex: 0)
@@ -160,7 +162,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         setUpCornerViews()
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         
         self.view.addSubview(blurView)
@@ -194,7 +196,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             if (blockIsContatinedInCornerView()){
                 if (!timing){
                     timing = true
-                    var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
+                    var timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "timerFinished", userInfo: nil, repeats: false)
                 }
             }
         }
@@ -248,6 +250,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             if (percentAlpha > 1.0){
                 percentAlpha = 1.0
             }
+            
+            println(percentAlpha)
             
             let a = CGFloat(1.0)
             backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
