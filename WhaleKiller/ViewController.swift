@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     var backgroundView : UIView!
     var gameOver = false
     var gameStarted = false
+    var blurView : UIView!
     
     //MARK: View did load
     //setup UIDynamics and collision behaviors
@@ -31,8 +32,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         //MARK: Game loop starts
         let speaker = Speaker()
         super.viewDidLoad()
-        // createGame()
-        //var gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateAlphaAndBeatRate", userInfo: nil, repeats: true)
         
         speaker.speakText("To begin the game, press and hold you home button to access Siri, and ask to turn voice over off. Later on, this feature can be turned back on, simply by going to Siri and asking for voice over on. ")
         //var a = SinePlayer()
@@ -50,9 +49,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         blockView.removeFromSuperview()
         fingerView.removeFromSuperview()
         backgroundView.removeFromSuperview()
+        blurView.removeFromSuperview()
         backgroundView = nil
-        //     dynamicAnimator = nil
         blockView = nil
+        blurView = nil
         fingerView = nil
         for x in cornerViews{
             x.removeFromSuperview()
@@ -160,7 +160,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         setUpCornerViews()
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         
         self.view.addSubview(blurView)
@@ -249,6 +249,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             if (percentAlpha > 1.0){
                 percentAlpha = 1.0
             }
+            
+            println(percentAlpha)
             
             let a = CGFloat(1.0)
             backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
