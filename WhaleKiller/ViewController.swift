@@ -32,7 +32,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     //MARK: Game initializatoin
     //setup UIDynamics and collision behaviors
     override func viewDidLoad() {
-        
         UIApplication.sharedApplication().statusBarHidden = true
         let speaker = Speaker()
         super.viewDidLoad()
@@ -153,7 +152,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
         let blockPushBehavior = UIPushBehavior(items: [blockView], mode: UIPushBehaviorMode.Continuous)
         blockPushBehavior.magnitude = 0.30
         blockPushBehavior.angle = randomizeAngleForNewGame()
-        println(blockPushBehavior.angle)
+        print(blockPushBehavior.angle)
         
         let blockDynamicBehavior = UIDynamicItemBehavior(items: [blockView])
         blockDynamicBehavior.elasticity = 1.0
@@ -196,6 +195,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
             newGameTimer.invalidate()
             speaker.speakText("Begin game")
             self.createGame()
+            gameLoopTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateGame", userInfo: nil, repeats: true)
+            
         }
     }
     
@@ -273,20 +274,18 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
                 percentAlpha = 1.0
             }
             
-            println(percentAlpha)
+            print(percentAlpha)
             
             let a = CGFloat(1.0)
             backgroundView.backgroundColor = UIColor(red: a, green: a, blue: a, alpha: percentAlpha)
             
             let beepInterval = distance / 400
-            //println(beepInterval)
             
             if (!timingBeeps){
                 let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(beepInterval), target: self, selector: "beep", userInfo: nil, repeats: false)
                 timingBeeps = true
             }
         }
-        //println(distance)
     }
     
     //MARK: Sound
@@ -304,7 +303,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate {
     func beep(){
         let soundURL = NSBundle.mainBundle().URLForResource("beep", withExtension: "wav")
         var mySound: SystemSoundID = 0
-        AudioServicesCreateSystemSoundID(soundURL, &mySound)
+        AudioServicesCreateSystemSoundID(soundURL!, &mySound)
         AudioServicesPlaySystemSound(mySound)
         timingBeeps = false
     }

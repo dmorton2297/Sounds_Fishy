@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="22D-nK-oku">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Menu View Controller-->
@@ -16,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEc-8l-DYd">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEc-8l-DYd">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="294"/>
                                 <color key="backgroundColor" red="0.027450980392156862" green="0.87450980392156863" blue="0.60392156862745094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" label="Directions"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -29,8 +30,8 @@
                                     <action selector="directionsButtonClicked:" destination="22D-nK-oku" eventType="touchUpInside" id="sAe-vV-yVo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TaP-ho-rou">
-                                <rect key="frame" x="0.0" y="299" width="600" height="301"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TaP-ho-rou">
+                                <rect key="frame" x="0.0" y="294" width="600" height="306"/>
                                 <color key="backgroundColor" red="0.14509803921568629" green="0.34509803921568627" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" label="Start Game"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -45,21 +46,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TaP-ho-rou" firstAttribute="bottom" secondItem="Sne-lV-pbb" secondAttribute="top" id="7Qs-9d-0Q1"/>
-                            <constraint firstItem="TaP-ho-rou" firstAttribute="leading" secondItem="efT-Hg-qcQ" secondAttribute="leading" id="K9H-Ok-i5c"/>
-                            <constraint firstItem="Sne-lV-pbb" firstAttribute="top" secondItem="DEc-8l-DYd" secondAttribute="bottom" constant="300" id="WiE-Tx-oW4"/>
-                            <constraint firstItem="TaP-ho-rou" firstAttribute="trailing" secondItem="DEc-8l-DYd" secondAttribute="trailing" id="aRX-1j-ecN"/>
-                            <constraint firstItem="TaP-ho-rou" firstAttribute="top" secondItem="BHw-OW-FOF" secondAttribute="bottom" constant="279" id="d5O-Bb-NFp"/>
-                            <constraint firstItem="DEc-8l-DYd" firstAttribute="top" secondItem="efT-Hg-qcQ" secondAttribute="top" id="iKs-cd-MZp"/>
-                            <constraint firstAttribute="trailing" secondItem="TaP-ho-rou" secondAttribute="trailing" id="kPg-rI-sjr"/>
-                            <constraint firstItem="TaP-ho-rou" firstAttribute="leading" secondItem="DEc-8l-DYd" secondAttribute="leading" id="tQL-G2-iSZ"/>
+                            <constraint firstItem="TaP-ho-rou" firstAttribute="top" secondItem="DEc-8l-DYd" secondAttribute="bottom" id="Qk6-Vu-Nga"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TaP-ho-rou" secondAttribute="trailing" constant="-16" id="RVQ-LG-CSY"/>
+                            <constraint firstItem="TaP-ho-rou" firstAttribute="leading" secondItem="efT-Hg-qcQ" secondAttribute="leadingMargin" constant="-16" id="S52-vR-ItI"/>
+                            <constraint firstItem="TaP-ho-rou" firstAttribute="top" secondItem="DEc-8l-DYd" secondAttribute="bottom" id="cZZ-um-yFl"/>
+                            <constraint firstItem="DEc-8l-DYd" firstAttribute="top" secondItem="efT-Hg-qcQ" secondAttribute="topMargin" id="e06-b0-mvH"/>
+                            <constraint firstItem="Sne-lV-pbb" firstAttribute="top" secondItem="TaP-ho-rou" secondAttribute="bottom" id="mb5-tT-b3I"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DEc-8l-DYd" secondAttribute="trailing" constant="-16" id="psE-tP-sbZ"/>
+                            <constraint firstItem="DEc-8l-DYd" firstAttribute="leading" secondItem="efT-Hg-qcQ" secondAttribute="leadingMargin" constant="-16" id="yS7-Hk-Lzq"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7PG-OY-08b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-90" y="312"/>
+            <point key="canvasLocation" x="-307" y="301"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">

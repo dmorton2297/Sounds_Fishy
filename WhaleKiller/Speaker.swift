@@ -12,7 +12,7 @@ import AVFoundation
 class Speaker {
     func speakText(str: String){
         let synth = AVSpeechSynthesizer()
-        var utterance = AVSpeechUtterance(string: str)
+        let utterance = AVSpeechUtterance(string: str)
         utterance.rate = 0.1
         synth.speakUtterance(utterance)
     }
