@@ -14,4 +14,4 @@ you collide with the fish.
 * Completely Accessible, with spoken instructions and cues. 
 
 ##App Images
-<img src='http://i.imgur.com/bzEBmiF.png' title='App Image 1' width='' alt='App Image 1' /> <img src='http://i.imgur.com/WLBw34s.png' title='App Image 2' width='' alt='App Image 2' />
+<img src='http://i.imgur.com/bzEBmiF.png' title='App Image 1' width='234px' height="425px" alt='App Image 1' /> <img src='http://i.imgur.com/WLBw34s.png' title='App Image 2' width='' alt='App Image 2' />
